@@ -10,6 +10,12 @@ echo "===================================================="
 echo "Tokyo Wholesale Tuna Prices Analysis - Takumi Yamada"
 
 echo "===================================================="
+if [ ! -f "$FILE" ];
+then 
+  echo "Error!! File not found: $FILE"
+  exit 1
+fi
+echo "===================================================="
 echo "Total number of data rows (excluding header):"
 tail -n +2 "$FILE" | wc -l
 
@@ -87,4 +93,4 @@ sort -n -r quantity.txt | head -5
 
 
 
-rm -rf values.txt price.txt quantity.txt
+rm -f price.txt quantity.txt
