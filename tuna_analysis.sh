@@ -32,7 +32,8 @@ do
     if [ -n "$species2" ]; then
     species="$species1 $species2"
     fi
-    echo "$species: $count"
+    # echo "$species: $count"
+    echo "$count  $species" | sed 's/^\([0-9]*\) \(.*\)$/\2: \1/'
 done    
 
 echo "===================================================="
@@ -60,7 +61,8 @@ echo "===================================================="
 grep 'Price' "$FILE" | cut -d',' -f3 > price.txt
 grep 'Quantity' "$FILE" | cut -d',' -f3 > quantity.txt
 
-PRICE_SUM=$(paste -s -d+ price.txt | bc)
+# PRICE_SUM=$(paste -s -d+ price.txt | bc)
+PRICE_SUM=$(xargs < price.txt | sed 's/ /+/g' | bc)
 PRICE_COUNT=$(wc -l < price.txt)
 PRICE_AVG=$(echo "scale=3; $PRICE_SUM / $PRICE_COUNT" | bc)
 
@@ -75,7 +77,8 @@ echo "Maximum price: $PRICE_MAX"
 echo "Top 5 highest prices:"
 sort -n -r price.txt | head -5
 
-QUANTITY_SUM=$(paste -s -d+ quantity.txt | bc)
+# QUANTITY_SUM=$(paste -s -d+ quantity.txt | bc)
+QUANTITY_SUM=$(xargs < quantity.txt | sed 's/ /+/g' | bc)
 QUANTITY_COUNT=$(wc -l < quantity.txt)
 QUANTITY_AVG=$(echo "scale=3; $QUANTITY_SUM / $QUANTITY_COUNT" | bc)
 
