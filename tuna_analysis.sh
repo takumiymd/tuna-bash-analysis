@@ -29,8 +29,9 @@ cut -d',' -f4 "$FILE" | tail -n +2 | sort | uniq -c | sort -n -r |
 while read count species1 species2
 do 
     species="$species1"
-    if [ -n "$species2" ]; then
-    species="$species1 $species2"
+    if [ -n "$species2" ];
+    then
+      species="$species1 $species2"
     fi
     # echo "$species: $count"
     echo "$count  $species" | sed 's/^\([0-9]*\) \(.*\)$/\2: \1/'
